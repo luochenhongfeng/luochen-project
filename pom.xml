@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.luochen</groupId>
+    <artifactId>luochen-project</artifactId>
+    <version>1.0.0</version>
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/versions-maven-plugin -->
+        <!--<dependency>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>versions-maven-plugin</artifactId>-->
+            <!--<version>2.7</version>-->
+        <!--</dependency>-->
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <profiles.active>local</profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
+<build>
+    <resources>
+        <resource>
+            <directory>${basedir}/src/main/resources/${profiles.active}</directory>
+        </resource>
+    </resources>
+    <plugins>
+        <plugin>
+            <groupId>com.luochen</groupId>
+            <artifactId>luochen-plugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <configuration>
+                <msg>This is my message!</msg>
+                <dir>${project.basedir}</dir>
+                <params>
+                    <param>1</param>
+                    <param>2</param>
+                </params>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>luochen</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>versions-maven-plugin</artifactId>
+    <version>2.7</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+        </execution>
+    </executions>
+</plugin>
+
+    </plugins>
+</build>
+</project>
